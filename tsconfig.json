@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "./dist", // Folderul unde va fi compilat codul
-    "rootDir": "./", // Codul sursă este direct în rădăcina proiectului
-    "module": "NodeNext", // Suport pentru ES Modules în Node.js
-    "moduleResolution": "NodeNext",
-    "target": "ESNext", // Compatibilitate cu ultimele versiuni de JS
-    "strict": true, // Activează verificările stricte de tip
-    "esModuleInterop": true, // Compatibilitate cu module CommonJS
-    "resolveJsonModule": true, // Permite importul de JSON
-    "skipLibCheck": true, // Evită erori legate de definițiile de tip
-    "forceConsistentCasingInFileNames": true // Previne probleme pe sisteme case-sensitive
+    "outDir": "./dist",
+    "rootDir": "./",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": ["*.ts"], // Include toate fișierele .ts din directorul curent
-  "exclude": ["node_modules", "dist"] // Exclude folderul `dist` și `node_modules`
+  "include": ["*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
