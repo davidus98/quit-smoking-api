@@ -6,15 +6,20 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx index.ts",
+    "dev": "nodemon --exec tsx index.ts",
     "dc-up": "docker-compose up -d",
-    "dc-down": "docker-compose down"
+    "dc-down": "docker-compose down",
+    "db-generate": "npx drizzle-kit generate pg ./db/schema.ts ./db/migrations",
+    "db:migrate:up": "npm run db-up && npx drizzle-kit generate && npx drizzle-kit push"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^5.2.1",
     "config": "^3.3.12",
+    "drizzle-kit": "^0.30.4",
     "drizzle-orm": "^0.39.3",
     "fastify": "^5.2.1",
     "openapi-backend": "^5.11.1",
@@ -25,6 +30,7 @@
     "@types/config": "^3.3.5",
     "@types/node": "^22.13.2",
     "@types/pg": "^8.11.11",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }

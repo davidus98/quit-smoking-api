@@ -7,7 +7,7 @@ const fastify = Fastify({
 });
 
 const api = new OpenAPIBackend({
-  definition: "./openapi/spec.yml",
+  definition: "./openapi/spec.yml", // OpenAPI spec path
   handlers: {
     getHello: async (_c, _req, _reply) => {
       return { message: "Hello from OpenAPI-Backend!" };
@@ -20,13 +20,37 @@ const api = new OpenAPIBackend({
 
 await api.init();
 
+await fastify.register(import("@fastify/swagger"));
+
+await fastify.register(import("@fastify/swagger-ui"), {
+  routePrefix: "/documentation",
+  uiConfig: {
+    docExpansion: "full",
+    deepLinking: false,
+  },
+  uiHooks: {
+    onRequest: function (_request, _reply, next) {
+      next();
+    },
+    preHandler: function (_request, _reply, next) {
+      next();
+    },
+  },
+  staticCSP: true,
+  transformStaticCSP: (header) => header,
+  transformSpecification: (_swaggerObject, _request, reply) => {
+    return api.document;
+  },
+  transformSpecificationClone: true,
+});
+
 fastify.all("/*", async (req, reply) => {
   return api.handleRequest(
     {
       method: req.method,
       path: req.url,
       body: req.body,
-      query: req.query as { [key: string]: string | string[] } | undefined, // Assert the correct type here,
+      query: req.query as { [key: string]: string | string[] } | undefined,
       headers: req.headers as { [key: string]: string | string[] },
     },
     req,
@@ -34,9 +58,10 @@ fastify.all("/*", async (req, reply) => {
   );
 });
 
+// Connect to the database
 await connectDB();
 
+// Start the Fastify server
 fastify.listen({ port: 3000 }, (err, _address) => {
   if (err) throw err;
-  // Server is now listening on ${address}
 });

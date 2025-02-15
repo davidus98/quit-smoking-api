@@ -1,4 +1,10 @@
-import { pgTable, uuid, varchar, timestamp } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  uuid,
+  varchar,
+  timestamp,
+  integer,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey(),
@@ -12,3 +18,11 @@ export type User = {
   email: string;
   created_at: string;
 };
+
+export const progress = pgTable("progress", {
+  id: uuid("id").primaryKey(),
+  user_id: varchar("user_id", { length: 255 }).notNull(),
+  date: timestamp("date").defaultNow(),
+  cigarettes_smoked: integer("cigarettes_smoked").notNull(),
+  notes: varchar("notes", { length: 500 }),
+});
