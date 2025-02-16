@@ -1,10 +1,10 @@
-import { defineConfig } from "drizzle-kit";
-import config from "config";
-import { PostgresConfig } from "./types/config";
+import { defineConfig } from "drizzle-kit"
+import config from "config"
+import { PostgresConfig } from "./types/config"
 
-const dbConfig = config.get<PostgresConfig>("postgres");
+const dbConfig = config.get<PostgresConfig>("postgres")
 
-const connectionString = `postgres://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`;
+const connectionString = `postgres://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`
 
 export default defineConfig({
   out: "./drizzle",
@@ -15,4 +15,4 @@ export default defineConfig({
   },
   verbose: true,
   strict: true,
-});
+})

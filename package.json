@@ -6,11 +6,19 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "dev": "nodemon --exec tsx index.ts",
     "dc-up": "docker-compose up -d",
     "dc-down": "docker-compose down",
     "db-generate": "npx drizzle-kit generate pg ./db/schema.ts ./db/migrations",
-    "db:migrate:up": "npm run db-up && npx drizzle-kit generate && npx drizzle-kit push"
+    "db:migrate:up": "npm run db-up && npx drizzle-kit generate && npx drizzle-kit push",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.ts": "npm run lint:fix",
+    "**/*.js": "npm run lint:fix",
+    "**/*.tsx": "npm run lint:fix"
   },
   "keywords": [],
   "author": "",
@@ -27,11 +35,18 @@
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@eslint/js": "^9.20.0",
     "@types/config": "^3.3.5",
     "@types/node": "^22.13.2",
     "@types/pg": "^8.11.11",
+    "eslint": "^9.20.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
   }
 }
